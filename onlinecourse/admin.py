@@ -29,7 +29,7 @@ class CourseAdmin(admin.ModelAdmin):
 # QuestionAdmin includes ChoiceInline to manage choices alongside questions
 class QuestionAdmin(admin.ModelAdmin):
     inlines = [ChoiceInline]
-    list_display = ['content']
+    list_display = ['question_text']
 
 
 class LessonAdmin(admin.ModelAdmin):
