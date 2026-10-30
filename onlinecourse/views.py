@@ -125,11 +125,14 @@ def extract_answers(request):
            submitted_anwsers.append(choice_id)
    return submitted_anwsers
 
+
 def show_exam_result(request, course_id, submission_id):
     context = {}
     course = get_object_or_404(Course, pk=course_id)
-    submission = Submission.objects.get(id=submission_id)
+    submission = get_object_or_404(Submission, pk=submission_id)
     choices = submission.choices.all()
+
+    selected_ids = list(choices.values_list('id', flat=True))
 
     total_score = 0
     questions = course.question_set.all()
@@ -144,6 +147,7 @@ def show_exam_result(request, course_id, submission_id):
     context['course'] = course
     context['grade'] = total_score
     context['choices'] = choices
+    context['selected_ids'] = selected_ids
 
     return render(request, 'onlinecourse/exam_result_bootstrap.html', context)
 
